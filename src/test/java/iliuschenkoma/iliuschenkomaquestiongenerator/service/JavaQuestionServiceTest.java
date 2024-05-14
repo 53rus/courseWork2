@@ -36,7 +36,7 @@ public class JavaQuestionServiceTest {
     }
 
     @Test
-    public void QuestionNotFoundExceptionTest() {
+    public void questionNotFoundExceptionTest() {
 
         Assertions.assertThrows(QuestionNotFoundException.class, () -> service.remove(removeQuestion));
     }
