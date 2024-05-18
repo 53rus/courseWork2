@@ -1,20 +1,20 @@
 package iliuschenkoma.iliuschenkomaquestiongenerator.service;
 
-import iliuschenkoma.iliuschenkomaquestiongenerator.exception.QuestionNotFoundException;
 import iliuschenkoma.iliuschenkomaquestiongenerator.model.Question;
-import iliuschenkoma.iliuschenkomaquestiongenerator.repository.JavaQuestionRepository;
+import iliuschenkoma.iliuschenkomaquestiongenerator.repository.MathQuestionRepository;
 import iliuschenkoma.iliuschenkomaquestiongenerator.repository.QuestionRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-
+import java.util.Collection;
 @Service
-public class JavaQuestionService implements QuestionService {
-    private final JavaQuestionRepository questionRepository;
+public class MathQuestionService implements QuestionService{
 
-    public JavaQuestionService(JavaQuestionRepository questionRepository) {
+    private final MathQuestionRepository questionRepository;
+
+    public MathQuestionService(MathQuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
+
 
     @Override
     public Question add(String question, String answer) {
@@ -40,9 +40,6 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question getRandomQuestion() {
-        Random random = new Random();
-        int count = random.nextInt(getAll().size());
-        return getAll().stream().toList().get(count);
+        return null;
     }
-
 }

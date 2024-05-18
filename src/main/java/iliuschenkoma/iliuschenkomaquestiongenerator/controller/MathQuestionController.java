@@ -1,6 +1,7 @@
 package iliuschenkoma.iliuschenkomaquestiongenerator.controller;
 
 import iliuschenkoma.iliuschenkomaquestiongenerator.model.Question;
+import iliuschenkoma.iliuschenkomaquestiongenerator.service.MathQuestionService;
 import iliuschenkoma.iliuschenkomaquestiongenerator.service.QuestionService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/exam/java")
-public class JavaQuestionController {
+@RequestMapping("/exam/math")
+public class MathQuestionController {
 
     private final QuestionService questionService;
 
-    public JavaQuestionController(@Qualifier("javaQuestionService")
+    public MathQuestionController(@Qualifier("mathQuestionService")
                                   QuestionService questionService) {
 
         this.questionService = questionService;
@@ -39,6 +40,4 @@ public class JavaQuestionController {
         Question que = new Question(question, answer);
         return questionService.remove(que);
     }
-
-
 }

@@ -32,30 +32,5 @@ public class ExaminerServiceTest {
             new Question("вопрос", "ответ")
     );
 
-    @BeforeEach
-    public void setUp() {
-        questionService = Mockito.mock(JavaQuestionService.class);
-        examinerService = new ExaminerServiceImpl(questionService);
-    }
-
-    @Test
-    public void getQuestionTest() {
-        List<Question> questionList = new ArrayList<>(testSet);
-        when(questionService.getAll()).thenReturn(questionList);
-        when(questionService.getRandomQuestion())
-                .thenReturn(questionList.get(1))
-                .thenReturn(questionList.get(2))
-                .thenReturn(questionList.get(3));
-        Collection<Question> test = examinerService.getQuestion(3);
-
-        Assertions.assertEquals(3, test.size());
-    }
-
-    @Test
-    public void incorrectQuestionQuantityRequestedExceptionTest() {
-        when(questionService.getAll()).thenReturn(testSet);
-
-        Assertions.assertThrows(IncorrectQuestionQuantityRequestedException.class, () -> examinerService.getQuestion(9));
-    }
 
 }

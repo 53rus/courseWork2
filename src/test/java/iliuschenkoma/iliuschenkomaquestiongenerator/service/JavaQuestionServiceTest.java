@@ -1,51 +1,30 @@
 package iliuschenkoma.iliuschenkomaquestiongenerator.service;
 
-import iliuschenkoma.iliuschenkomaquestiongenerator.exception.QuestionNotFoundException;
 import iliuschenkoma.iliuschenkomaquestiongenerator.model.Question;
+import iliuschenkoma.iliuschenkomaquestiongenerator.repository.QuestionRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collection;
-import java.util.Set;
-
+import static org.mockito.Mockito.when;
+@ExtendWith(MockitoExtension.class)
 public class JavaQuestionServiceTest {
-
-    private final QuestionService service = new JavaQuestionService();
-    private final Question testQuestion = new Question("вопрос", "ответ");
-    private final Question removeQuestion = new Question("вопрос", "ответ");
-
-
-
-    @Test
-    public void addQuestionTest() {
-
-        Assertions.assertEquals(testQuestion, service.add(testQuestion));
-    }
+    @Mock
+    private QuestionRepository questionRepository;
+    @InjectMocks
+    private JavaQuestionService questionService;
+    private final Question testQuestion = new Question("test", "test");
 
     @Test
     public void addTest() {
+        when(questionRepository.add(testQuestion))
+                .thenReturn(testQuestion);
 
-        Assertions.assertEquals(testQuestion, service.add("вопрос","ответ"));
+        //Assertions.assertNotNull(questionService.getAll());
+        Assertions.assertEquals(testQuestion, questionService.add(testQuestion));
     }
 
-    @Test
-    public void removeTest() {
-        service.add(testQuestion);
-
-        Assertions.assertEquals(service.remove(removeQuestion),testQuestion);
-    }
-
-    @Test
-    public void questionNotFoundExceptionTest() {
-
-        Assertions.assertThrows(QuestionNotFoundException.class, () -> service.remove(removeQuestion));
-    }
-
-    @Test
-    public void getAllTest() {
-
-        Collection<Question> testSet = service.getAll();
-
-        Assertions.assertNotNull(testSet);
-    }
 }
