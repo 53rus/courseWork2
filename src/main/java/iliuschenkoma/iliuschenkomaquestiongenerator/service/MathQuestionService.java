@@ -1,17 +1,18 @@
 package iliuschenkoma.iliuschenkomaquestiongenerator.service;
 
 import iliuschenkoma.iliuschenkomaquestiongenerator.model.Question;
-import iliuschenkoma.iliuschenkomaquestiongenerator.repository.MathQuestionRepository;
 import iliuschenkoma.iliuschenkomaquestiongenerator.repository.QuestionRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Random;
+
 @Service
 public class MathQuestionService implements QuestionService{
+    private final QuestionRepository questionRepository;
 
-    private final MathQuestionRepository questionRepository;
-
-    public MathQuestionService(MathQuestionRepository questionRepository) {
+    public MathQuestionService(@Qualifier("mathQuestionRepository") QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
 
@@ -40,6 +41,8 @@ public class MathQuestionService implements QuestionService{
 
     @Override
     public Question getRandomQuestion() {
-        return null;
+        Random random = new Random();
+        int count = random.nextInt(getAll().size());
+        return getAll().stream().toList().get(count);
     }
 }

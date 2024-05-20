@@ -5,32 +5,68 @@ import iliuschenkoma.iliuschenkomaquestiongenerator.model.Question;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class ExaminerServiceTest {
 
+    @Mock
+    private QuestionService javaQuestionService;
+    @Mock
+    private QuestionService mathQuestionService;
+    @Mock
+    private Random random;
+    @InjectMocks
     private ExaminerServiceImpl examinerService;
 
-    private JavaQuestionService questionService;
+    private final List<Question> javaSetTest = List.of(
+            new Question("java q", "java a"),
+            new Question("java q1", "java a1"),
+            new Question("java q2", "java q2"));
 
-    private final Set<Question> testSet = Set.of(
-            new Question("вопрос7", "ответ7"),
-            new Question("вопрос1", "ответ1"),
-            new Question("вопрос2", "ответ2"),
-            new Question("вопрос3", "ответ3"),
-            new Question("вопрос4", "ответ4"),
-            new Question("вопрос5", "ответ5"),
-            new Question("вопрос6", "ответ6"),
-            new Question("вопрос", "ответ")
-    );
+    private final List<Question> mathSetTest = List.of(
+            new Question("math q", "math a"),
+            new Question("math q1", "math a1"),
+            new Question("math q2", "math a2"));
+
+
+
+
+
+    @Test
+
+    public void getQuestionTest() {
+        List<Question> questionList = new ArrayList<>();
+        questionList.addAll(javaSetTest);
+        questionList.addAll(mathSetTest);
+
+        when(javaQuestionService.getAll()).thenReturn(javaSetTest);
+        when(javaQuestionService.getAll()).thenReturn(javaSetTest);
+
+        Collection<Question> test = examinerService.getQuestion(2);
+
+        Assertions.assertEquals(3, test.size());
+
+    }
+
+
+    @Test
+    public void incorrectQuestionQuantityRequestedExceptionTest() {
+
+         when(javaQuestionService.getAll()).thenReturn(javaSetTest);
+         when(mathQuestionService.getAll()).thenReturn(mathSetTest);
+
+         Assertions.assertThrows(IncorrectQuestionQuantityRequestedException.class, () -> examinerService.getQuestion(9));
+    }
 
 
 }

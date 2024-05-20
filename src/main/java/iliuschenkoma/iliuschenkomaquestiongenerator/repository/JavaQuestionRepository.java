@@ -25,7 +25,6 @@ public class JavaQuestionRepository implements QuestionRepository {
         javaQuestionSet.add(new Question("вопрос java5 ", "ответ java5"));
         javaQuestionSet.add(new Question("вопрос java6 ", "ответ java6"));
         javaQuestionSet.add(new Question("вопрос java7 ", "ответ java7"));
-
     }
 
     @Override

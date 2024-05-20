@@ -10,16 +10,21 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.function.BooleanSupplier;
 
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class JavaQuestionServiceTest {
+public class MathQuestionServiceTest {
+
     @Mock
     private QuestionRepository questionRepository;
     @InjectMocks
-    private JavaQuestionService questionService;
+    private MathQuestionService mathQuestionService;
     private final Question testQuestion = new Question("test", "test");
 
     private final Set<Question> testSet = Set.of(
@@ -37,8 +42,8 @@ public class JavaQuestionServiceTest {
         when(questionRepository.add(testQuestion))
                 .thenReturn(testQuestion);
 
-        Assertions.assertNotNull(questionService.getAll());
-        Assertions.assertEquals(testQuestion, questionService.add(testQuestion));
+        Assertions.assertNotNull(mathQuestionService.getAll());
+        Assertions.assertEquals(testQuestion, mathQuestionService.add(testQuestion));
     }
 
     @Test
@@ -46,7 +51,7 @@ public class JavaQuestionServiceTest {
         when(questionRepository.remove(testQuestion))
                 .thenReturn(testQuestion);
 
-        Assertions.assertEquals(testQuestion, questionService.remove(testQuestion));
+        Assertions.assertEquals(testQuestion, mathQuestionService.remove(testQuestion));
     }
 
     @Test
@@ -54,21 +59,22 @@ public class JavaQuestionServiceTest {
         when(questionRepository.getAll())
                 .thenReturn(testSet);
 
-        Assertions.assertEquals(testSet, questionService.getAll());
+        Assertions.assertEquals(testSet, mathQuestionService.getAll());
     }
 
     @Test
     public void getRandomQuestionTest() {
+
         when(questionRepository.getAll()).thenReturn(testSet);
-        Question actual = questionService.getRandomQuestion();
-        Assertions.assertTrue(questionService.getAll().contains(actual));
+        Question actual = mathQuestionService.getRandomQuestion();
+        Assertions.assertTrue(mathQuestionService.getAll().contains(actual));
     }
+
 
     @Test
     public void questionNotFoundExceptionTest() {
         when(questionRepository.remove(testQuestion))
                 .thenThrow(QuestionNotFoundException.class);
-        Assertions.assertThrows(QuestionNotFoundException.class, () -> questionService.remove(testQuestion));
+        Assertions.assertThrows(QuestionNotFoundException.class, () -> mathQuestionService.remove(testQuestion));
     }
-
 }

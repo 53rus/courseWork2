@@ -1,20 +1,21 @@
 package iliuschenkoma.iliuschenkomaquestiongenerator.service;
 
-import iliuschenkoma.iliuschenkomaquestiongenerator.exception.QuestionNotFoundException;
 import iliuschenkoma.iliuschenkomaquestiongenerator.model.Question;
-import iliuschenkoma.iliuschenkomaquestiongenerator.repository.JavaQuestionRepository;
 import iliuschenkoma.iliuschenkomaquestiongenerator.repository.QuestionRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Random;
 
 @Service
 public class JavaQuestionService implements QuestionService {
-    private final JavaQuestionRepository questionRepository;
+     private final QuestionRepository questionRepository;
 
-    public JavaQuestionService(JavaQuestionRepository questionRepository) {
+    public JavaQuestionService(@Qualifier("javaQuestionRepository") QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
+
 
     @Override
     public Question add(String question, String answer) {
